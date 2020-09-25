@@ -2,8 +2,8 @@
 
 [rspotify](https://github.com/ramsayleung/rspotify) を使用しています。下記を試してみました。
 
-- アーティストの検索
-- 指定したアーティストの楽曲 TOP10 を表示する
+- アーティストの情報を検索する
+- 指定したアーティストの楽曲人気 TOP10 を表示する
 - 指定した楽曲を再生する
 
 ## Environment
