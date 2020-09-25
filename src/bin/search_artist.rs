@@ -1,5 +1,6 @@
 extern crate rspotify;
 
+use std::env;
 use rspotify::client::Spotify;
 use rspotify::oauth2::{SpotifyClientCredentials, SpotifyOAuth};
 use rspotify::senum::{Country, SearchType};
@@ -7,6 +8,13 @@ use rspotify::util::get_token;
 
 #[tokio::main]
 async fn main() {
+    let args: Vec<String> = env::args().collect();
+    if args.len() == 1 {
+        println!("Usage: cargo run --bin search_artist <ARTIST_NAME>");
+        return;
+    }
+    let artist_name = &args[1];
+
     let mut oauth = SpotifyOAuth::default().scope("user-read-private").build();
     match get_token(&mut oauth).await {
         Some(token_info) => {
@@ -21,7 +29,7 @@ async fn main() {
             let result = spotify
                 .search(
                     // q: 検索キーワード
-                    "DA PUMP",
+                    artist_name,
                     // type: 検索タイプ（album, artist, playlist, track, etc.）
                     SearchType::Artist,
                     // limit: 取得するデータの最大数

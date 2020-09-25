@@ -1,11 +1,19 @@
 extern crate rspotify;
 
+use std::env;
 use rspotify::client::Spotify;
 use rspotify::oauth2::SpotifyClientCredentials;
 use rspotify::senum::Country;
 
 #[tokio::main]
 async fn main() {
+    let args: Vec<String> = env::args().collect();
+    if args.len() == 1 {
+        println!("Usage: cargo run --bin artist_top_tracks <ARTIST_ID>");
+        return;
+    }
+    let artist_id = &args[1];
+
     let client_credential = SpotifyClientCredentials::default().build();
     let spotify = Spotify::default()
         .client_credentials_manager(client_credential)
@@ -15,7 +23,7 @@ async fn main() {
     let result = spotify
         .artist_top_tracks(
             // id: artist の Spotify ID
-            "3NRXKeatDxKe4apH6XawKX",
+            artist_id,
             // country: 国名コード
             Country::Japan
         )

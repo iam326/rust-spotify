@@ -1,5 +1,6 @@
 extern crate rspotify;
 
+use std::env;
 use rspotify::client::Spotify;
 use rspotify::model::offset::for_position;
 use rspotify::oauth2::{SpotifyClientCredentials, SpotifyOAuth};
@@ -7,6 +8,14 @@ use rspotify::util::get_token;
 
 #[tokio::main]
 async fn main() {
+    let args: Vec<String> = env::args().collect();
+    if args.len() == 1 {
+        println!("Usage: cargo run --bin play_track <TRACK_ID>");
+        return;
+    }
+    let track_id = &args[1];
+    let track_uri = "spotify:track:".to_string() + track_id;
+
     let mut oauth = SpotifyOAuth::default()
         .scope("user-modify-playback-state,user-read-playback-state")
         .build();
@@ -39,7 +48,7 @@ async fn main() {
                     // context_uri: 再生する album, artist, playlist の指定
                     None,
                     // uris: 再生する track のリストを指定
-                    Some(vec!["spotify:track:623pmkD6sclgLBQrrPqyz4".to_owned()]),
+                    Some(vec![track_uri]),
                     // offset: album, playlist, track の再生を開始する位置
                     for_position(0),
                     // position_ms: track の再生を開始する位置
