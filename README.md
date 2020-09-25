@@ -24,7 +24,7 @@ rustc 1.46.0 (04488afe3 2020-08-24)
 ## Usage
 
 ```
-// アーティストを検索する
+// アーティストの情報を検索する
 $ cargo run --bin search_artist <ARTIST_NAME>
 
 // 指定したアーティストの楽曲人気 TOP10 を表示する
